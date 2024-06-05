@@ -19,15 +19,19 @@ class MyGame(arcade.Window):
         # Initialize the game window with specified width, height, and title
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
-        # Initialize sprite lists for players and walls
+        # Initialize sprite lists for players, walls, and coins
         self.player_list = None
         self.wall_list = None
+        self.coin_list = None
 
         # Initialize the player sprite
         self.player_sprite = None
 
         # Initialize the physics engine
         self.physics_engine = None
+
+        # Initialize the score
+        self.score = 0
 
         # Set the background color to Amazon green
         arcade.set_background_color(arcade.color.AMAZON)
@@ -38,6 +42,7 @@ class MyGame(arcade.Window):
         # Create sprite lists
         self.player_list = arcade.SpriteList()
         self.wall_list = arcade.SpriteList()
+        self.coin_list = arcade.SpriteList()
 
         # Set up the player sprite with an image and scale
         self.player_sprite = arcade.Sprite(":resources:images/animated_characters/male_adventurer/maleAdventurer_idle.png", 0.5)
@@ -52,6 +57,13 @@ class MyGame(arcade.Window):
             wall.center_y = 32
             self.wall_list.append(wall)
 
+        # Create coins
+        for x in range(128, 1250, 256):
+            coin = arcade.Sprite(":resources:images/items/coinGold.png", 0.5)
+            coin.center_x = x
+            coin.center_y = 96
+            self.coin_list.append(coin)
+
         # Set up the physics engine with gravity
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.wall_list, gravity_constant=GRAVITY)
 
@@ -60,6 +72,10 @@ class MyGame(arcade.Window):
         arcade.start_render()  # Start rendering
         self.wall_list.draw()  # Draw wall sprites
         self.player_list.draw()  # Draw player sprites
+        self.coin_list.draw()  # Draw coin sprites
+
+        # Draw the score on the screen
+        arcade.draw_text(f"Score: {self.score}", 10, 10, arcade.color.WHITE, 18)
 
     def on_key_press(self, key, modifiers):
         """ Handle user keyboard input for movement and jumping. """
@@ -82,6 +98,14 @@ class MyGame(arcade.Window):
     def update(self, delta_time):
         """ Update game logic for movement and game state for each frame. """
         self.physics_engine.update()  # Update physics engine calculations
+
+        # Check for collisions between player and coins
+        coin_hit_list = arcade.check_for_collision_with_list(self.player_sprite, self.coin_list)
+        
+        # Update the score and remove the collected coins
+        for coin in coin_hit_list:
+            coin.remove_from_sprite_lists()
+            self.score += 1
 
 # Main execution point of the script
 if __name__ == "__main__":
