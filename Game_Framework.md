@@ -9,6 +9,7 @@ This project is a simple 2D platformer game built using the Python Arcade librar
 - **Character Movement**: The player can move left, right, and jump using the arrow keys.
 - **Simple Physics**: Includes basic gravity and jumping mechanics.
 - **Level Design**: A single static level with platforms laid out horizontally.
+- **Coins to jump**: A coin is placed in locatins to collect or jump over.
 
 ## Installation
 
