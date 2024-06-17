@@ -25,6 +25,8 @@ The second purpose is to step into the exciting world of game development itself
 
 [Software Demo Video](http://youtube.link.goes.here)
 
+[Github](git@github.com:lachisholm/Arcade.git)
+
 # Development Environment
 
 {Describe the tools that you used to develop the software}
