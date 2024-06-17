@@ -1,4 +1,3 @@
-
 # This is a game framework made as a base to a future development of the whole game with different levels and things to achieve while playing the game.
 
 # Import the Arcade library, necessary for game development
